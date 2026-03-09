@@ -1,36 +1,7 @@
+#include "parser/parser.h"
 #include <cstring>
 #include <fstream>
-#include <iostream>
 #include <stdio.h>
-#include <string>
-#include <vector>
-
-struct reviewer {
-    int id;
-    int primary;
-    int secondary;
-};
-
-struct submission {
-    int id;
-    int primary;
-    int secondary;
-};
-
-struct parameters {
-    int minReviews;
-    int maxReviews;
-    int primaryRev;
-    int secondaryRev;
-    int primarySub;
-    int secondarySub;
-};
-
-struct control {
-    int gen;
-    int risk;
-    std::string output;
-};
 
 int read_value(char* word) {
     int value = -1;
@@ -180,38 +151,30 @@ void parse(std::ifstream& file, control& control) {
     }
 }
 
-void parse_file(const char* file, std::vector<submission>& submissions, std::vector<reviewer>& reviewers, parameters& parameters, control& control) {
-    std::ifstream in(file);
+std::ifstream find_header(const char* file, const std::string& header) {	
+	std::ifstream in(file);
+	std::string line;
+	std::getline(in, line);
 
-    std::string line;
-    std::getline(in, line);
+	while (line != header) {
+		std::getline(in, line);
+	}
 
-    parse(in, submissions);
-    parse(in, reviewers);
-    parse(in, parameters);
-	parse(in, control);
+	return in;
 }
 
-int main(int argc, char* argv[]) {
-    if (argc < 2) return -1;
+void parse_file(const char* file, std::vector<submission>& submissions, std::vector<reviewer>& reviewers, parameters& parameters, control& control) {
+	std::ifstream in;
 
-    std::vector<submission> submissions;
-    std::vector<reviewer> reviewers;
-    parameters paramenters;
-    control control;
+	in = find_header(file, "#Submissions");
+    parse(in, submissions);
 
-    parse_file(argv[1], submissions, reviewers, paramenters, control);
+	in = find_header(file, "#Reviewers");
+    parse(in, reviewers);
 
-    std::cout << "Submissions\n";
-    for (submission sub : submissions) std::cout << sub.id << ' ' << sub.primary << ' ' << sub.secondary << std::endl;
+	in = find_header(file, "#Parameters");
+    parse(in, parameters);
 
-    std::cout << "Reviewers\n";
-    for (reviewer rev : reviewers) std::cout << rev.id << ' ' << rev.primary << ' ' << rev.secondary << std::endl;
-
-    std::cout << "Parameters\n";
-    std::cout << paramenters.minReviews << " " << paramenters.maxReviews << " " << paramenters.primaryRev << " " << paramenters.secondaryRev << " " << paramenters.primarySub << " " << paramenters.secondarySub << std::endl;
-
-	std::cout << "Control\n";
-	std::cout << control.gen << " " << control.risk << " " << control.output << std::endl;
-    return 0;
+	in = find_header(file, "#Control");
+	parse(in, control);
 }
