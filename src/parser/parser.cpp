@@ -32,7 +32,7 @@ void parse(std::ifstream& file, std::vector<submission>& submissions) {
     std::getline(file, line);
     std::getline(file, line);
 
-    while (line[0] != '#') {
+    while (file && line[0] != '#') {
         char buffer[100];
         std::strcpy(buffer, line.c_str());
 
@@ -64,7 +64,7 @@ void parse(std::ifstream& file, std::vector<reviewer>& reviewers) {
     std::getline(file, line);
     std::getline(file, line);
 
-    while (line[0] != '#') {
+    while (file && line[0] != '#') {
         char buffer[100];
         std::strcpy(buffer, line.c_str());
 
@@ -107,7 +107,7 @@ void parse(std::ifstream& file, parameters& parameters) {
     std::getline(file, line);
     int i = 0;
 
-    while (line[0] != '#') {
+    while (file && line[0] != '#') {
         char buffer[100];
         std::strcpy(buffer, line.c_str());
         parse_line(buffer, parameters, i);
@@ -141,7 +141,7 @@ void parse(std::ifstream& file, control& control) {
     int i = 0;
 
 
-    while (!line.empty() && line[0] != '#') {
+    while (file && line[0] != '#') {
         char buffer[100];
         std::strcpy(buffer, line.c_str());
         parse_line(buffer, control, i);
@@ -156,7 +156,7 @@ std::ifstream find_header(const char* file, const std::string& header) {
 	std::string line;
 	std::getline(in, line);
 
-	while (line != header) {
+	while (in && line != header) {
 		std::getline(in, line);
 	}
 

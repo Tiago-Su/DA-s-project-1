@@ -5,29 +5,29 @@
 #include <vector>
 
 struct reviewer {
-    int id;
-    int primary;
-    int secondary;
+    int id = -1;
+    int primary = -1;
+    int secondary = -1;
 };
 
 struct submission {
-    int id;
-    int primary;
-    int secondary;
+    int id = -1;
+    int primary = -1;
+    int secondary = -1;
 };
 
 struct parameters {
-    int minReviews;
-    int maxReviews;
-    int primaryRev;
-    int secondaryRev;
-    int primarySub;
-    int secondarySub;
+    int minReviews = -1;
+    int maxReviews = -1;
+    int primaryRev = -1;
+    int secondaryRev = -1;
+    int primarySub = -1;
+    int secondarySub = -1;
 };
 
 struct control {
-    int gen;
-    int risk;
+    int gen = -1;
+    int risk = -1;
     std::string output;
 };
 
