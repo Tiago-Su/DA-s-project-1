@@ -19,12 +19,12 @@ class Adapter{
         Adapter(Parser parser){
             convert_to_graph(parser);
         }
-        void convert_to_graph(Parser parser);
         Graph<int> graph;
         std::unordered_map<int, vertexType> map;
-
         
-    private:
+        
+        private:
+        void convert_to_graph(Parser parser);
 };
 
 #endif
