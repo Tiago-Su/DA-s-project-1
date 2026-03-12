@@ -1,4 +1,4 @@
-#include "parser/parser.h"
+#include "parser.h"
 #include <cstring>
 #include <fstream>
 #include <stdio.h>
