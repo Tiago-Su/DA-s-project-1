@@ -12,3 +12,4 @@ set( CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE_TMP} )
 
 # fileName, cpp file, all libraries
 add_executable(testParser ./test/testParser.cpp ./src/parser.cpp)
+add_executable(testAdapter ./test/testAdapter.cpp ./src/adapter.cpp ./src/parser.cpp)
