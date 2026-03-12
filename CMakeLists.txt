@@ -11,4 +11,4 @@ include_directories(include)
 set( CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE_TMP} )
 
 # fileName, cpp file, all libraries
-add_executable(testParser ./test/testParser/testParser.cpp ./src/parser/parser.cpp)
+add_executable(testParser ./test/testParser.cpp ./src/parser.cpp)
