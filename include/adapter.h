@@ -10,12 +10,14 @@ enum vertexType {
     reviewer
 };
 
-template <class T>
+
 class Adapter{
     public:
-        Adapter(Parser parser);
+        Adapter(Parser parser){
+            convert_to_graph(parser);
+        }
         void convert_to_graph(Parser parser);
-        Graph<T> graph;
+        Graph<int> graph;
         std::unordered_map<int, vertexType> map;
 
         

@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
     if (argc < 2) return -1;
 
     Parser parser = Parser(argv[1]);
-    Adapter<int> adapter = Adapter<int>(parser);
+    Adapter adapter = Adapter(parser);
 
     Graph<int> graph = adapter.graph;
 

@@ -38,7 +38,7 @@ void Parser::parse(std::ifstream& file, std::vector<submission>& submissions) {
 
         submission s;
         parse_line(buffer, s);
-        submissions.push_back(s);
+        if (s.id != -1) submissions.push_back(s);
 
         std::getline(file, line);
     }
@@ -70,7 +70,7 @@ void Parser::parse(std::ifstream& file, std::vector<reviewer>& reviewers) {
 
         reviewer r;
         parse_line(buffer, r);
-        reviewers.push_back(r);
+        if (r.id != -1) reviewers.push_back(r);
 
         std::getline(file, line);
     }
@@ -182,3 +182,4 @@ void Parser::parse_file(const char* file, std::vector<submission>& submissions, 
 Parser::Parser(const char* filename){
     parse_file(filename, submissions, reviewers, parameters, control);
 }
+
