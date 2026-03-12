@@ -3,14 +3,14 @@
 #include <fstream>
 #include <stdio.h>
 
-int read_value(char* word) {
+int Parser::read_value(char* word) {
     int value = -1;
     if (word) value = std::atoi(word);
 
     return value;
 }
 
-void parse_line(char* line, submission& s) {
+void Parser::parse_line(char* line, submission& s) {
     // Read Id
     s.id = read_value(std::strtok(line, ","));
 
@@ -26,7 +26,7 @@ void parse_line(char* line, submission& s) {
     s.secondary = read_value(std::strtok(NULL, ","));
 }
 
-void parse(std::ifstream& file, std::vector<submission>& submissions) {
+void Parser::parse(std::ifstream& file, std::vector<submission>& submissions) {
     std::string line;
 
     std::getline(file, line);
@@ -44,7 +44,7 @@ void parse(std::ifstream& file, std::vector<submission>& submissions) {
     }
 }
 
-void parse_line(char* line, reviewer& r) {
+void Parser::parse_line(char* line, reviewer& r) {
     // Read Id
     r.id = read_value(std::strtok(line, ","));
 
@@ -59,7 +59,7 @@ void parse_line(char* line, reviewer& r) {
     r.secondary = read_value(std::strtok(NULL, ","));
 }
 
-void parse(std::ifstream& file, std::vector<reviewer>& reviewers) {
+void Parser::parse(std::ifstream& file, std::vector<reviewer>& reviewers) {
     std::string line;
     std::getline(file, line);
     std::getline(file, line);
@@ -76,7 +76,7 @@ void parse(std::ifstream& file, std::vector<reviewer>& reviewers) {
     }
 }
 
-void parse_line(char* line, parameters& p, int i) {
+void Parser::parse_line(char* line, parameters_& p, int i) {
     std::strtok(line, ",");
     int value = read_value(std::strtok(NULL, ","));
 
@@ -102,7 +102,7 @@ void parse_line(char* line, parameters& p, int i) {
     }
 }
 
-void parse(std::ifstream& file, parameters& parameters) {
+void Parser::parse(std::ifstream& file, parameters_& parameters) {
     std::string line;
     std::getline(file, line);
     int i = 0;
@@ -117,7 +117,7 @@ void parse(std::ifstream& file, parameters& parameters) {
     }
 }
 
-void parse_line(char* line, control& p, int i) {
+void Parser::parse_line(char* line, control_& p, int i) {
     std::strtok(line, ",");
     char* word = std::strtok(NULL, ",");
     int value = read_value(word);
@@ -135,7 +135,7 @@ void parse_line(char* line, control& p, int i) {
     }
 }
 
-void parse(std::ifstream& file, control& control) {
+void Parser::parse(std::ifstream& file, control_& control) {
     std::string line;
     std::getline(file, line);
     int i = 0;
@@ -151,7 +151,7 @@ void parse(std::ifstream& file, control& control) {
     }
 }
 
-std::ifstream find_header(const char* file, const std::string& header) {	
+std::ifstream Parser::find_header(const char* file, const std::string& header) {	
 	std::ifstream in(file);
 	std::string line;
 	std::getline(in, line);
@@ -163,7 +163,7 @@ std::ifstream find_header(const char* file, const std::string& header) {
 	return in;
 }
 
-void parse_file(const char* file, std::vector<submission>& submissions, std::vector<reviewer>& reviewers, parameters& parameters, control& control) {
+void Parser::parse_file(const char* file, std::vector<submission>& submissions, std::vector<reviewer>& reviewers, parameters_& parameters, control_& control) {
 	std::ifstream in;
 
 	in = find_header(file, "#Submissions");
@@ -177,4 +177,8 @@ void parse_file(const char* file, std::vector<submission>& submissions, std::vec
 
 	in = find_header(file, "#Control");
 	parse(in, control);
+}
+
+Parser::Parser(const char* filename){
+    parse_file(filename, submissions, reviewers, parameters, control);
 }
