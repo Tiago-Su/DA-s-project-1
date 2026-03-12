@@ -1,3 +1,6 @@
+#ifndef ADAPTER
+#define ADAPTER
+
 #include "parser.h"
 #include "Graph.h"
 #include <unordered_map>
@@ -24,3 +27,4 @@ class Adapter{
     private:
 };
 
+#endif

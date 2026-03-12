@@ -1,7 +1,5 @@
-
-
-#ifndef PARSER
-#define PARSER
+#ifndef MAXFLOW
+#define MAXFLOW
 
 #include"Graph.h"
 
