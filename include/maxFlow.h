@@ -7,9 +7,7 @@ template <class T>
 class MaxFlow{
 
     public:
-
-    MaxFlow(Graph<T> * graph);
-    void edmondsKarp(Graph<T> *g, int source, int target);
+    static void edmondsKarp(Graph<T> *g, int source, int target);
 
     private:
 
