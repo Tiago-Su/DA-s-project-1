@@ -6,7 +6,6 @@
 int Parser::read_value(char* word) {
     int value = -1;
     if (word) value = std::atoi(word);
-
     return value;
 }
 
@@ -130,7 +129,7 @@ void Parser::parse_line(char* line, control_& p, int i) {
             p.risk = value;
             break;
         case 2:
-			p.output = word;
+            p.output = word;
             break;
     }
 }
@@ -139,7 +138,6 @@ void Parser::parse(std::ifstream& file, control_& control) {
     std::string line;
     std::getline(file, line);
     int i = 0;
-
 
     while (file && line[0] != '#') {
         char buffer[100];
@@ -151,35 +149,34 @@ void Parser::parse(std::ifstream& file, control_& control) {
     }
 }
 
-std::ifstream Parser::find_header(const char* file, const std::string& header) {	
-	std::ifstream in(file);
-	std::string line;
-	std::getline(in, line);
+std::ifstream Parser::find_header(const char* file, const std::string& header) {
+    std::ifstream in(file);
+    std::string line;
+    std::getline(in, line);
 
-	while (in && line != header) {
-		std::getline(in, line);
-	}
+    while (in && line != header) {
+        std::getline(in, line);
+    }
 
-	return in;
+    return in;
 }
 
 void Parser::parse_file(const char* file, std::vector<submission>& submissions, std::vector<reviewer>& reviewers, parameters_& parameters, control_& control) {
-	std::ifstream in;
+    std::ifstream in;
 
-	in = find_header(file, "#Submissions");
+    in = find_header(file, "#Submissions");
     parse(in, submissions);
 
-	in = find_header(file, "#Reviewers");
+    in = find_header(file, "#Reviewers");
     parse(in, reviewers);
 
-	in = find_header(file, "#Parameters");
+    in = find_header(file, "#Parameters");
     parse(in, parameters);
 
-	in = find_header(file, "#Control");
-	parse(in, control);
+    in = find_header(file, "#Control");
+    parse(in, control);
 }
 
-Parser::Parser(const char* filename){
+Parser::Parser(const char* filename) {
     parse_file(filename, submissions, reviewers, parameters, control);
 }
-

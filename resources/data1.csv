@@ -9,7 +9,7 @@
 #Parameters
 MinReviewsPerSubmission, 5
 MaxReviewsPerReviewer, 4
-PrimaryReviewerExpertise, 0
+PrimaryReviewerExpertise, 1
 SecondaryReviewerExpertise, 0
 PrimarySubmissionDomain, 1
 SecondarySubmissionDomain, 1
