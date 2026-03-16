@@ -4,7 +4,9 @@
 int main(int argc, char* argv[]) {
     if (argc < 2) return -1;
 
-    Parser parser = Parser(argv[1]);
+    Parser parser;
+    parser.load_file(argv[1]);
+    parser.parse_file();
 
     std::cout << "Submissions\n";
     for (submission sub : parser.submissions) std::cout << sub.id << ' ' << sub.primary << ' ' << sub.secondary << std::endl;

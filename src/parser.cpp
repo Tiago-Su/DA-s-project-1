@@ -161,7 +161,7 @@ std::ifstream Parser::find_header(const char* file, const std::string& header) {
     return in;
 }
 
-void Parser::parse_file(const char* file, std::vector<submission>& submissions, std::vector<reviewer>& reviewers, parameters_& parameters, control_& control) {
+void Parser::parse_file() {
     std::ifstream in;
 
     in = find_header(file, "#Submissions");
@@ -177,6 +177,6 @@ void Parser::parse_file(const char* file, std::vector<submission>& submissions, 
     parse(in, control);
 }
 
-Parser::Parser(const char* filename) {
-    parse_file(filename, submissions, reviewers, parameters, control);
+void Parser::load_file(const char* file_name) {
+    file = file_name;
 }

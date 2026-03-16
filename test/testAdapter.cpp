@@ -5,9 +5,13 @@
 int main(int argc, char* argv[]) {
     if (argc < 2) return -1;
 
-    Parser parser = Parser(argv[1]);
-    Adapter adapter = Adapter(parser);
+    Parser parser;
+    Adapter adapter;
 
+	parser.load_file(argv[1]);
+	parser.parse_file();
+
+	adapter.convert_to_graph(parser);
     Graph<int> graph = adapter.graph;
 
     for (size_t i = 0; i < graph.getVertexSet().size(); i++) {
