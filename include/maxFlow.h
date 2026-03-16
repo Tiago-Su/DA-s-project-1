@@ -1,21 +1,17 @@
 #ifndef MAXFLOW
 #define MAXFLOW
 
-#include"Graph.h"
+#include "Graph.h"
 
-template <class T>
-class MaxFlow{
+class MaxFlow {
+  public:
+    void edmondsKarp(Graph<int>* g, int source, int target);
 
-    public:
-    static void edmondsKarp(Graph<T> *g, int source, int target);
-
-    private:
-
-    void testAndVisit(std::queue< Vertex<T>*> &q, Edge<T> *e, Vertex<T> *w, double residual);
-    bool findAugmentingPath(Graph<T> *g, Vertex<T> *s, Vertex<T> *t);
-    double findMinResidualAlongPath(Vertex<T> *s, Vertex<T> *t);
-    void augmentFlowAlongPath(Vertex<T> *s, Vertex<T> *t, double f);
-
+  private:
+    void testAndVisit(std::queue<Vertex<int>*>& q, Edge<int>* e, Vertex<int>* w, double residual);
+    bool findAugmentingPath(Graph<int>* g, Vertex<int>* s, Vertex<int>* t);
+    double findMinResidualAlongPath(Vertex<int>* s, Vertex<int>* t);
+    void augmentFlowAlongPath(Vertex<int>* s, Vertex<int>* t, double f);
 };
 
 #endif

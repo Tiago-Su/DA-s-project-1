@@ -1,7 +1,6 @@
 #include "maxFlow.h"
 
-template <class T>
-void MaxFlow<T>::testAndVisit(std::queue<Vertex<T>*>& q, Edge<T>* e, Vertex<T>* w, double residual) {
+void MaxFlow::testAndVisit(std::queue<Vertex<int>*>& q, Edge<int>* e, Vertex<int>* w, double residual) {
     if (!w->isVisited() && residual > 0) {
         w->setVisited(true);
         w->setPath(e);
@@ -9,29 +8,27 @@ void MaxFlow<T>::testAndVisit(std::queue<Vertex<T>*>& q, Edge<T>* e, Vertex<T>* 
     }
 }
 
-template <class T>
-bool MaxFlow<T>::findAugmentingPath(Graph<T>* g, Vertex<T>* s, Vertex<T>* t) {
+bool MaxFlow::findAugmentingPath(Graph<int>* g, Vertex<int>* s, Vertex<int>* t) {
     for (auto v : g->getVertexSet()) v->setVisited(false);
 
-    std::queue<Vertex<T>*> q;
+    std::queue<Vertex<int>*> q;
     q.push(s);
     s->setVisited(true);
 
     while (!q.empty()) {
-        Vertex<T>* u = q.front();
+        Vertex<int>* u = q.front();
         q.pop();
 
-        for (Edge<T>* edge : u->getAdj()) testAndVisit(q, edge, edge->getDest(), edge->getWeight() - edge->getFlow());
-        for (Edge<T>* edge : u->getIncoming()) testAndVisit(q, edge, edge->getOrig(), edge->getFlow());
+        for (Edge<int>* edge : u->getAdj()) testAndVisit(q, edge, edge->getDest(), edge->getWeight() - edge->getFlow());
+        for (Edge<int>* edge : u->getIncoming()) testAndVisit(q, edge, edge->getOrig(), edge->getFlow());
     }
 
     return t->isVisited();
 }
 
-template <class T>
-double MaxFlow<T>::findMinResidualAlongPath(Vertex<T>* s, Vertex<T>* t) {
+double MaxFlow::findMinResidualAlongPath(Vertex<int>* s, Vertex<int>* t) {
     double f = INF;
-    Vertex<T>* u = t;
+    Vertex<int>* u = t;
 
     while (u != s) {
         if (u == u->getPath()->getDest()) {
@@ -48,9 +45,8 @@ double MaxFlow<T>::findMinResidualAlongPath(Vertex<T>* s, Vertex<T>* t) {
     return f;
 }
 
-template <class T>
-void MaxFlow<T>::augmentFlowAlongPath(Vertex<T>* s, Vertex<T>* t, double f) {
-    Vertex<T>* u = t;
+void MaxFlow::augmentFlowAlongPath(Vertex<int>* s, Vertex<int>* t, double f) {
+    Vertex<int>* u = t;
     while (u != s) {
         if (u == u->getPath()->getDest()) {
             u->getPath()->setFlow(u->getPath()->getFlow() + f);
@@ -64,10 +60,11 @@ void MaxFlow<T>::augmentFlowAlongPath(Vertex<T>* s, Vertex<T>* t, double f) {
     }
 }
 
-template <class T>
-void MaxFlow<T>::edmondsKarp(Graph<T>* g, int source, int target) {
-    Vertex<T>* s = g->findVertex(source);
-    Vertex<T>* t = g->findVertex(target);
+void MaxFlow::edmondsKarp(Graph<int>* g, int source, int target) {
+    Vertex<int>* s = g->findVertex(source);
+    Vertex<int>* t = g->findVertex(target);
 
-    while (findAugmentingPath(g, s, t)) augmentFlowAlongPath(s, t, findMinResidualAlongPath(s, t));
+    while (findAugmentingPath(g, s, t)) {
+        augmentFlowAlongPath(s, t, findMinResidualAlongPath(s, t));
+    }
 }
