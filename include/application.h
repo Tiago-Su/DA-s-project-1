@@ -1,19 +1,19 @@
 #ifndef APPLICATION
 #define APPLICATION
 
+#include "state/state.h"
+
 class Application {
   public:
-	
-  private:
-	void parse_file();
-	void convert_to_graph();
-	void use_tool();
-	
-	void draw_menu();
-	void draw_options();
-	void select_dataset();
+	Application();
+	~Application();
 
-	void draw_path();
+	void update();
+	bool is_running();
+
+  private:
+	State* state;	
+	bool running;
 };
 
 #endif
