@@ -7,6 +7,7 @@ int main(int argc, char* argv[]) {
     tool.setup(argv[1]);
     tool.get_max_flow();
 
+    std::cout << "It is valid\n";
     std::cout << "#SubmissionId,ReviewerId,Match\n";
     for (output out : tool.submissions_output) {
         std::cout << out.id_orig << " " << out.id_dest << " " << out.match << std::endl;
@@ -18,4 +19,8 @@ int main(int argc, char* argv[]) {
         std::cout << out.id_orig << " " << out.id_dest << " " << out.match << std::endl;
     }
     std::cout << "#Total: " << tool.reviewers_output.size() << std::endl;
+
+    for (output out : tool.missing_output) {
+        std::cout << out.id_orig << " " << out.id_dest << " " << out.match << std::endl;
+    }
 }

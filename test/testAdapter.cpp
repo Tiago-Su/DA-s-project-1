@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
         Vertex<int>* v1 = graph.getVertexSet()[i];
 
         for (size_t j = 0; j < v1->getAdj().size(); j++) {
-            std::cout << v1->getAdj()[j]->getOrig()->id << " " << v1->getAdj()[j]->getDest()->id   << " " << v1->getAdj()[j]->domain << std::endl;
+            std::cout << v1->getAdj()[j]->getOrig()->id << " " << v1->getAdj()[j]->getDest()->id   << " " << v1->getAdj()[j]->domain << " " << v1->getAdj()[j]->getWeight() << std::endl;
         }
     }
     

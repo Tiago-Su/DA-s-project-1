@@ -1,7 +1,8 @@
 #include "tool.h"
+#include <algorithm>
 
 void Tool::setup(char* path) {
-	this->path = path;
+    this->path = path;
 
     parser.load_file(path);
     parser.parse_file();
@@ -9,7 +10,7 @@ void Tool::setup(char* path) {
 }
 
 void Tool::get_max_flow() {
-	if (!path) return;
+    if (!path) return;
 
     max_flow.edmondsKarp(&adapter.graph, 0, 1);
     Graph<int> graph = adapter.graph;
@@ -36,4 +37,19 @@ void Tool::get_max_flow() {
                 break;
         }
     }
+
+	for (size_t i = 0; i < adapter.graph.getVertexSet()[1]->getIncoming().size(); i++) {
+		Edge<int>* edge = adapter.graph.getVertexSet()[1]->getIncoming()[i];
+		if (edge->getFlow() != edge->getWeight()) {
+			missing_output.push_back({edge->getOrig()->id, edge->domain, (int) (edge->getWeight() - edge->getFlow())});
+		}
+	}
+
+    std::sort(reviewers_output.begin(), reviewers_output.end(), [](output& a, output& b) {
+        return a.id_orig < b.id_orig;
+    });
+
+    std::sort(submissions_output.begin(), submissions_output.end(), [](output& a, output& b) {
+        return a.id_orig < b.id_orig;
+    });
 }

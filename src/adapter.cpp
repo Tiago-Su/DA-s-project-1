@@ -31,7 +31,7 @@ void Adapter::convert_to_graph(Parser parser) {
         graph.addVertex(i);
         graph.getVertexSet()[i]->id = parser.submissions[i - 2 - parser.reviewers.size()].id;
         map[i] = submission;
-        graph.addEdge(i, 1, parser.parameters.minReviews, -1);
+        graph.addEdge(i, 1, parser.parameters.minReviews, parser.submissions[i - 2 - parser.reviewers.size()].primary);
 
         std::unordered_set<int> seen;
         // Adding the edge from reviewer to submission - primary topic
