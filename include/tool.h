@@ -23,12 +23,12 @@ class Tool {
     void reset_graph();
 
     void print_output();
-
     char* path = nullptr;
     std::vector<output> reviewers_output;
     std::vector<output> submissions_output;
     std::vector<output> missing_output;
     std::set<int> risk_output;
+
 
   private:
     Adapter adapter;

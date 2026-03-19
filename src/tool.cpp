@@ -1,6 +1,7 @@
 #include "tool.h"
 #include "Graph.h"
 #include <algorithm>
+#include <fstream>
 
 bool output_comp(output& a, output& b) {
     return a.id_orig < b.id_orig;
@@ -8,11 +9,9 @@ bool output_comp(output& a, output& b) {
 
 void Tool::setup(char* path) {
     this->path = path;
-
     parser.load_file(path);
     parser.parse_file();
     adapter.convert_to_graph(parser);
-
     is_setup_done = true;
 }
 
