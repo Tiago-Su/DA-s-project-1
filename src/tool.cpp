@@ -127,9 +127,22 @@ void Tool::risk_analysis() {
     is_risk_analysis_done = true;
 }
 
+void Tool::save_to_file(){
+
+    std::string file_path = "program_output/" + parser.control.output;
+    std::ofstream file_stream(file_path);
+
+    print_basic(file_stream);
+    print_missing(file_stream);
+    print_risk(file_stream);
+}
 
 void Tool::print_output() {
-	print_basic();
-	print_missing();
-	print_risk();
+
+	print_basic(std::cout);
+	print_missing(std::cout);
+	print_risk(std::cout);
+
+    save_to_file();
 }
+
