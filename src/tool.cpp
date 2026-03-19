@@ -1,5 +1,10 @@
 #include "tool.h"
+#include "Graph.h"
 #include <algorithm>
+
+bool output_comp(output& a, output& b) {
+    return a.id_orig < b.id_orig;
+}
 
 void Tool::setup(char* path) {
     this->path = path;
@@ -9,12 +14,26 @@ void Tool::setup(char* path) {
     adapter.convert_to_graph(parser);
 }
 
+void Tool::get_missing_output() {
+    // Storing the missing ones
+    for (size_t i = 0; i < adapter.graph.getVertexSet()[1]->getIncoming().size(); i++) {
+        Edge<int>* edge = adapter.graph.getVertexSet()[1]->getIncoming()[i];
+
+        if (edge->getFlow() != edge->getWeight()) {
+            missing_output.push_back({edge->getOrig()->id, edge->domain, (int)(edge->getWeight() - edge->getFlow())});
+        }
+    }
+
+    std::sort(missing_output.begin(), missing_output.end(), output_comp);
+}
+
 void Tool::get_max_flow() {
     if (!path) return;
 
     max_flow.edmondsKarp(&adapter.graph, 0, 1);
     Graph<int> graph = adapter.graph;
 
+    // Storing the matchings
     for (size_t i = 2; i < graph.getVertexSet().size(); i++) {
         Vertex<int>* v = graph.getVertexSet()[i];
 
@@ -38,18 +57,68 @@ void Tool::get_max_flow() {
         }
     }
 
-	for (size_t i = 0; i < adapter.graph.getVertexSet()[1]->getIncoming().size(); i++) {
-		Edge<int>* edge = adapter.graph.getVertexSet()[1]->getIncoming()[i];
-		if (edge->getFlow() != edge->getWeight()) {
-			missing_output.push_back({edge->getOrig()->id, edge->domain, (int) (edge->getWeight() - edge->getFlow())});
-		}
-	}
+    // Sorting
+    std::sort(reviewers_output.begin(), reviewers_output.end(), output_comp);
+    std::sort(submissions_output.begin(), submissions_output.end(), output_comp);
+}
 
-    std::sort(reviewers_output.begin(), reviewers_output.end(), [](output& a, output& b) {
-        return a.id_orig < b.id_orig;
-    });
+void Tool::reset_graph() {
+    Graph<int>* g = &adapter.graph;
+    for (size_t i = 0; i < g->getVertexSet().size(); i++) g->getVertexSet()[i]->setVisited(false);
+}
 
-    std::sort(submissions_output.begin(), submissions_output.end(), [](output& a, output& b) {
-        return a.id_orig < b.id_orig;
-    });
+void Tool::bfs(Vertex<int>* v) {
+    std::queue<Vertex<int>*> queue;
+    reset_graph();
+
+    queue.push(v);
+    v->setVisited(true);
+
+    while (!queue.empty()) {
+        Vertex<int>* current = queue.front();
+        queue.pop();
+
+        for (size_t i = 0; i < current->getAdj().size(); i++) {
+            Edge<int>* edge = current->getAdj()[i];
+            Vertex<int>* next = edge->getDest();
+
+            if (!next->isVisited() && edge->getWeight() - edge->getFlow()) {
+                queue.push(next);
+                next->setVisited(true);
+            }
+        }
+
+        for (size_t i = 0; i < current->getIncoming().size(); i++) {
+            Edge<int>* edge = current->getIncoming()[i];
+            Vertex<int>* next = edge->getOrig();
+
+            if (!next->isVisited() && edge->getFlow()) {
+                queue.push(next);
+                next->setVisited(true);
+            }
+        }
+    }
+
+    std::cout << "oo\n";
+    for (size_t i = 0; i < adapter.graph.getVertexSet().size(); i++) {
+        if (adapter.graph.getVertexSet()[i]->isVisited()) std::cout << adapter.graph.getVertexSet()[i]->id << std::endl;
+    }
+}
+
+void Tool::risk_analysis(std::set<int>& res) {
+    if (parser.control.risk != 1) return;
+    bfs(adapter.graph.getVertexSet()[0]);
+
+    Graph<int>* g = &adapter.graph;
+
+    for (size_t i = 0; i < g->getVertexSet().size(); i++) {
+        Vertex<int>* v = g->getVertexSet()[i];
+        if (v->isVisited()) continue;
+
+        for (size_t j = 0; j < v->getIncoming().size(); j++) {
+            if (adapter.map[v->getInfo()] == submission) {
+                res.insert(v->getIncoming()[j]->getOrig()->id);
+            }
+        }
+    }
 }

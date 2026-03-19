@@ -4,6 +4,7 @@
 #include "parser.h"
 #include "adapter.h"
 #include "maxFlow.h"
+#include <set>
 
 struct output {
     int id_orig;
@@ -15,8 +16,11 @@ class Tool {
   public:
 	void setup(char* path);
 	void get_max_flow();
-	void get_missing_values();
-	bool is_valid();
+	void get_missing_output();
+	void risk_analysis(std::set<int>& res);
+
+	void bfs(Vertex<int>* v);
+	void reset_graph();
 
 	char* path = nullptr;
 	std::vector<output> reviewers_output;
