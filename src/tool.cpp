@@ -12,6 +12,8 @@ void Tool::setup(char* path) {
     parser.load_file(path);
     parser.parse_file();
     adapter.convert_to_graph(parser);
+
+    is_setup_done = true;
 }
 
 void Tool::get_missing_output() {
@@ -25,10 +27,14 @@ void Tool::get_missing_output() {
     }
 
     std::sort(missing_output.begin(), missing_output.end(), output_comp);
+    is_missing_output_done = true;
 }
 
 void Tool::get_max_flow() {
-    if (!path) return;
+    if (!path || !is_setup_done) {
+        printf("Error: load setup dataset first\n");
+        return;
+    }
 
     max_flow.edmondsKarp(&adapter.graph, 0, 1);
     Graph<int> graph = adapter.graph;
@@ -60,6 +66,8 @@ void Tool::get_max_flow() {
     // Sorting
     std::sort(reviewers_output.begin(), reviewers_output.end(), output_comp);
     std::sort(submissions_output.begin(), submissions_output.end(), output_comp);
+
+    is_max_flow_done = true;
 }
 
 void Tool::reset_graph() {
@@ -98,14 +106,9 @@ void Tool::bfs(Vertex<int>* v) {
             }
         }
     }
-
-    std::cout << "oo\n";
-    for (size_t i = 0; i < adapter.graph.getVertexSet().size(); i++) {
-        if (adapter.graph.getVertexSet()[i]->isVisited()) std::cout << adapter.graph.getVertexSet()[i]->id << std::endl;
-    }
 }
 
-void Tool::risk_analysis(std::set<int>& res) {
+void Tool::risk_analysis() {
     if (parser.control.risk != 1) return;
     bfs(adapter.graph.getVertexSet()[0]);
 
@@ -117,8 +120,17 @@ void Tool::risk_analysis(std::set<int>& res) {
 
         for (size_t j = 0; j < v->getIncoming().size(); j++) {
             if (adapter.map[v->getInfo()] == submission) {
-                res.insert(v->getIncoming()[j]->getOrig()->id);
+                risk_output.insert(v->getIncoming()[j]->getOrig()->id);
             }
         }
     }
+
+    is_risk_analysis_done = true;
+}
+
+
+void Tool::print_output() {
+	print_basic();
+	print_missing();
+	print_risk();
 }
