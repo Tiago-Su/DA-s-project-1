@@ -2,7 +2,6 @@
 #include "Graph.h"
 #include <algorithm>
 #include <fstream>
-
 bool output_comp(output& a, output& b) {
     return a.id_orig < b.id_orig;
 }
@@ -13,6 +12,23 @@ void Tool::setup(char* path) {
     parser.parse_file();
     adapter.convert_to_graph(parser);
     is_setup_done = true;
+}
+void Tool::printParametersControl() {
+    std::cout << "Parameters\n";
+    std::cout << parser.parameters.minReviews << " " << parser.parameters.maxReviews << " " << parser.parameters.primaryRev << " " << parser.parameters.secondaryRev << " " << parser.parameters.primarySub << " " << parser.parameters.secondarySub << std::endl;
+    std::cout<<std::endl;
+    std::cout << "Control\n";
+    std::cout << parser.control.gen << " " << parser.control.risk << " " << parser.control.output << std::endl;
+}
+
+void Tool::printSubmissions() {
+    std::cout << "Submissions\n";
+    for (auto sub : parser.submissions) std::cout << sub.id << ' ' << sub.primary << ' ' << sub.secondary << std::endl;
+}
+
+void Tool::printReviewers() {
+    std::cout << "Reviewers\n";
+    for (auto rev : parser.reviewers) std::cout << rev.id << ' ' << rev.primary << ' ' << rev.secondary << std::endl;
 }
 
 void Tool::get_missing_output() {
@@ -132,4 +148,9 @@ void Tool::print_output() {
 	print_basic();
 	print_missing();
 	print_risk();
+}
+
+void Tool::print_risk_analysis() {
+    std::cout << "h";
+    print_risk();
 }

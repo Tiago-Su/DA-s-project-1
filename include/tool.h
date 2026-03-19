@@ -18,7 +18,10 @@ class Tool {
     void get_max_flow();
     void get_missing_output();
     void risk_analysis();
-
+    void print_risk_analysis();
+    void printParametersControl();
+    void printSubmissions();
+    void printReviewers();
     void bfs(Vertex<int>* v);
     void reset_graph();
 

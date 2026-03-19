@@ -5,7 +5,7 @@
 #ifndef PROJECT_TUI_H
 #define PROJECT_TUI_H
 #include <string>
-
+#include "tool.h"
 
 class Tui {
 public:
@@ -18,7 +18,16 @@ public:
     void selectDataSet();
     bool isDataSetSelected();
     void run();
+    Tool tool;
+    void displayRunMenu();
+    void runOptionHandler(int option);
+    int getRunOption();
+    void runHandler();
     void displayCredits();
+    void displayPrintMenu();
+    void printOptionHandler(int option);
+    int getPrintOption();
+    void printHandler();
 
    std::string dataSetPath;
     bool isRunning;
