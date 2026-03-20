@@ -128,7 +128,6 @@ void Tool::risk_analysis() {
 }
 
 void Tool::save_to_file(){
-
     std::string file_path = "program_output/" + parser.control.output;
     std::ofstream file_stream(file_path);
 
@@ -138,11 +137,8 @@ void Tool::save_to_file(){
 }
 
 void Tool::print_output() {
-
 	print_basic(std::cout);
 	print_missing(std::cout);
 	print_risk(std::cout);
-
-    save_to_file();
 }
 
