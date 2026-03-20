@@ -28,6 +28,7 @@ class Tool {
     void print_output();
 
     void save_to_file();
+    void save_to_file(char* file);
 
     char* path = nullptr;
     std::vector<output> reviewers_output;

@@ -2,6 +2,7 @@
 #include "Graph.h"
 #include <algorithm>
 #include <fstream>
+#include <cstring>
 
 bool output_comp(output& a, output& b) {
     return a.id_orig < b.id_orig;
@@ -151,6 +152,26 @@ void Tool::printSubmissions() {
 void Tool::printReviewers() {
     std::cout << "Reviewers\n";
     for (auto rev : parser.reviewers) std::cout << rev.id << ' ' << rev.primary << ' ' << rev.secondary << std::endl;
+}
+
+void Tool::save_to_file(char* file){
+	char directory[32] = "program_output/";
+	file = std::strcat(directory, file);
+
+    std::ofstream file_stream(file);
+	if (file_stream.fail()) {
+		std::cout << "An error occurred. Check if directory 'program_ouput' is valid\n";
+		return;
+	}
+
+	if (!is_missing_output_done) get_missing_output();
+	if (parser.control.risk == 1 && !is_risk_analysis_done) risk_analysis();
+
+    print_basic(file_stream);
+    print_missing(file_stream);
+    print_risk(file_stream);
+	file_stream.close();
+	std::cout << "Saved successfully\n";
 }
 
 void Tool::save_to_file(){
