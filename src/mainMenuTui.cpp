@@ -16,7 +16,6 @@ void clear() {
 }
 void Tui::displayMenu() {
     clear();
-
     std::cout << "Please enter the option number. Use 5 as a command to retrocede back to Main Menu" << std::endl << std::endl;
     std::cout << "1: Description" << std::endl;
     std::cout << "2: Select Dataset" << std::endl;
@@ -84,7 +83,6 @@ void Tui::selectDataSet() {
             std::cout << std::endl << "Dataset selected." << std::endl;
             isRunning = true;
             return;
-
         } else {
             dataSetPath.clear();
             std::cout << std::endl << "Invalid path. Please enter a valid dataset path.";
@@ -115,6 +113,7 @@ void Tui::runHandler() {
         runOptionHandler(option);
     }
 }
+
 void onHold() {
     while (true) {
         std::cout << std::endl;
@@ -123,7 +122,6 @@ void onHold() {
         std::cin >> option;
 
         if (option == 5) break;
-
         std::cout << "Invalid input." << std::endl;
     }
 }
@@ -133,8 +131,8 @@ void Tui::runOptionHandler(int option) {
             printHandler();
             break;
         case 2:
-            std::cout << "file";
-            onHold();
+			tool.save_to_file();
+			onHold();
             break;
         case 3:
             tool.risk_analysis();
@@ -185,15 +183,7 @@ void Tui::run() {
 
 void Tui::displayCredits() {
     clear();
-    while (true) {
-        int option;
-        std::cin >> option;
-        if (option == 5) {
-            break;
-        }
-
-        std::cout << std::endl << "Invalid command. Use 5 to retrocede" << std::endl;
-    }
+    std::cout << std::endl << "Credits selected." << std::endl;
 }
 
 void Tui::displayDescription() {

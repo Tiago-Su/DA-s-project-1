@@ -116,6 +116,17 @@ void Parser::parse(std::ifstream& file, parameters_& parameters) {
     }
 }
 
+char* trim(char* word) {
+    while (std::isspace(*word) || *word == '"') word++;
+	char* end = word;
+
+	end += std::strlen(word) - 1; 
+	while (std::isspace(*end) || *end == '"') end--;
+	*(end + 1) = '\0';
+
+	return word;
+}
+
 void Parser::parse_line(char* line, control_& p, int i) {
     std::strtok(line, ",");
     char* word = std::strtok(NULL, ",");
@@ -129,7 +140,7 @@ void Parser::parse_line(char* line, control_& p, int i) {
             p.risk = value;
             break;
         case 2:
-            p.output = word;
+            p.output = trim(word);
             break;
     }
 }
