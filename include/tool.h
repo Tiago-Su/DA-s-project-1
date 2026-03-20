@@ -32,7 +32,6 @@ class Tool {
     std::vector<output> missing_output;
     std::set<int> risk_output;
 
-
   private:
     Adapter adapter;
     Parser parser;

@@ -1,7 +1,7 @@
 #include "tool.h"
 #include "Graph.h"
 #include <algorithm>
-#include <fstream>
+
 bool output_comp(output& a, output& b) {
     return a.id_orig < b.id_orig;
 }
@@ -12,23 +12,6 @@ void Tool::setup(char* path) {
     parser.parse_file();
     adapter.convert_to_graph(parser);
     is_setup_done = true;
-}
-void Tool::printParametersControl() {
-    std::cout << "Parameters\n";
-    std::cout << parser.parameters.minReviews << " " << parser.parameters.maxReviews << " " << parser.parameters.primaryRev << " " << parser.parameters.secondaryRev << " " << parser.parameters.primarySub << " " << parser.parameters.secondarySub << std::endl;
-    std::cout<<std::endl;
-    std::cout << "Control\n";
-    std::cout << parser.control.gen << " " << parser.control.risk << " " << parser.control.output << std::endl;
-}
-
-void Tool::printSubmissions() {
-    std::cout << "Submissions\n";
-    for (auto sub : parser.submissions) std::cout << sub.id << ' ' << sub.primary << ' ' << sub.secondary << std::endl;
-}
-
-void Tool::printReviewers() {
-    std::cout << "Reviewers\n";
-    for (auto rev : parser.reviewers) std::cout << rev.id << ' ' << rev.primary << ' ' << rev.secondary << std::endl;
 }
 
 void Tool::get_missing_output() {
@@ -124,9 +107,17 @@ void Tool::bfs(Vertex<int>* v) {
 }
 
 void Tool::risk_analysis() {
-    if (parser.control.risk != 1) return;
-    bfs(adapter.graph.getVertexSet()[0]);
+    if (parser.control.risk != 1) {
+		std::cout << "Cannot do risk analysis: risk analysis != 1\n";
+		return;
+	} 
 
+	if (!missing_output.empty()) {
+		std::cout << "Cannot do risk analysis: this dataset is not valid\n";
+		return;
+	}
+
+    bfs(adapter.graph.getVertexSet()[0]);
     Graph<int>* g = &adapter.graph;
 
     for (size_t i = 0; i < g->getVertexSet().size(); i++) {
@@ -143,14 +134,30 @@ void Tool::risk_analysis() {
     is_risk_analysis_done = true;
 }
 
-
 void Tool::print_output() {
-	print_basic();
-	print_missing();
-	print_risk();
+    print_basic();
+    print_missing();
+    print_risk();
 }
 
 void Tool::print_risk_analysis() {
-    std::cout << "h";
     print_risk();
+}
+
+void Tool::printParametersControl() {
+    std::cout << "Parameters\n";
+    std::cout << parser.parameters.minReviews << " " << parser.parameters.maxReviews << " " << parser.parameters.primaryRev << " " << parser.parameters.secondaryRev << " " << parser.parameters.primarySub << " " << parser.parameters.secondarySub << std::endl;
+    std::cout << std::endl;
+    std::cout << "Control\n";
+    std::cout << parser.control.gen << " " << parser.control.risk << " " << parser.control.output << std::endl;
+}
+
+void Tool::printSubmissions() {
+    std::cout << "Submissions\n";
+    for (auto sub : parser.submissions) std::cout << sub.id << ' ' << sub.primary << ' ' << sub.secondary << std::endl;
+}
+
+void Tool::printReviewers() {
+    std::cout << "Reviewers\n";
+    for (auto rev : parser.reviewers) std::cout << rev.id << ' ' << rev.primary << ' ' << rev.secondary << std::endl;
 }
