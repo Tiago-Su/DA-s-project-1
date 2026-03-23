@@ -10,6 +10,7 @@
 class Tui {
 public:
     bool running = true;
+    Tool tool;
     void menuHandler();
     void displayMenu();
     int getOption();
@@ -18,7 +19,6 @@ public:
     void selectDataSet();
     bool isDataSetSelected();
     void run();
-    Tool tool;
     void displayRunMenu();
     void runOptionHandler(int option);
     int getRunOption();
