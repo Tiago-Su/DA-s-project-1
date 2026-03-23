@@ -15,7 +15,7 @@ add_executable(testParser ./test/testParser.cpp ./src/parser.cpp)
 add_executable(testAdapter ./test/testAdapter.cpp ./src/adapter.cpp ./src/parser.cpp)
 add_executable(testTool ./test/testTool.cpp ./src/tool.cpp ./src/adapter.cpp ./src/parser.cpp ./src/maxFlow.cpp)
 add_executable(myProg
-        ./src/mainMenuTui.cpp
+        src/Tui.cpp
         ./src/myProg.cpp
         ./src/tool.cpp
         ./src/adapter.cpp
