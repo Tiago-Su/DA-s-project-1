@@ -116,6 +116,10 @@ void Parser::parse(std::ifstream& file, parameters_& parameters) {
     }
 }
 
+/**
+ * @brief trims trailing and following spaces or quotation marks of a string
+ * @param word string to trim
+ */
 char* trim(char* word) {
     while (std::isspace(*word) || *word == '"') word++;
 	char* end = word;
