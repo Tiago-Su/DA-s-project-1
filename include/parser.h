@@ -47,6 +47,10 @@ struct control_ {
     std::string output;
 };
 
+/**
+ * @struct Parser
+ * @brief Parses input file into attribute objects
+ */
 class Parser {
   public:
     // Methods

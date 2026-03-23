@@ -1,0 +1,67 @@
+\hypertarget{classAdapter}{}\doxysection{Adapter Class Reference}
+\label{classAdapter}\index{Adapter@{Adapter}}
+
+
+Class that converts a \mbox{\hyperlink{classParser}{Parser}} into a graph.  
+
+
+
+
+{\ttfamily \#include $<$adapter.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classAdapter_ac247b9627f64966ff0c9803a7c7d0c43}{convert\+\_\+to\+\_\+graph}} (\mbox{\hyperlink{classParser}{Parser}} parser)
+\begin{DoxyCompactList}\small\item\em Converts the parsed .cvs into the corresponding graph. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Graph$<$ int $>$ \mbox{\hyperlink{classAdapter_a16c0b87ec87035f6be67f4a44e0dc1ca}{graph}}
+\item 
+std\+::unordered\+\_\+map$<$ int, \mbox{\hyperlink{adapter_8h_a3931ffa7cd4a0005be369b34231a4b84}{vertex\+Type}} $>$ \mbox{\hyperlink{classAdapter_a12fa85141ffe7abd2527eac80588854a}{map}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that converts a \mbox{\hyperlink{classParser}{Parser}} into a graph. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classAdapter_ac247b9627f64966ff0c9803a7c7d0c43}\label{classAdapter_ac247b9627f64966ff0c9803a7c7d0c43}} 
+\index{Adapter@{Adapter}!convert\_to\_graph@{convert\_to\_graph}}
+\index{convert\_to\_graph@{convert\_to\_graph}!Adapter@{Adapter}}
+\doxysubsubsection{\texorpdfstring{convert\_to\_graph()}{convert\_to\_graph()}}
+{\footnotesize\ttfamily void Adapter\+::convert\+\_\+to\+\_\+graph (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classParser}{Parser}}}]{parser }\end{DoxyParamCaption})}
+
+
+
+Converts the parsed .cvs into the corresponding graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parser} & The parser object which parsed the .csv \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Execute the parsing before calling this method 
+\end{DoxyWarning}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classAdapter_a16c0b87ec87035f6be67f4a44e0dc1ca}\label{classAdapter_a16c0b87ec87035f6be67f4a44e0dc1ca}} 
+\index{Adapter@{Adapter}!graph@{graph}}
+\index{graph@{graph}!Adapter@{Adapter}}
+\doxysubsubsection{\texorpdfstring{graph}{graph}}
+{\footnotesize\ttfamily Graph$<$int$>$ Adapter\+::graph}
+
+Graph created by the \mbox{\hyperlink{classAdapter}{Adapter}} \mbox{\Hypertarget{classAdapter_a12fa85141ffe7abd2527eac80588854a}\label{classAdapter_a12fa85141ffe7abd2527eac80588854a}} 
+\index{Adapter@{Adapter}!map@{map}}
+\index{map@{map}!Adapter@{Adapter}}
+\doxysubsubsection{\texorpdfstring{map}{map}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$int, \mbox{\hyperlink{adapter_8h_a3931ffa7cd4a0005be369b34231a4b84}{vertex\+Type}}$>$ Adapter\+::map}
+
+Hash\+Map that maps each node to its type 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{adapter_8h}{adapter.\+h}}\end{DoxyCompactItemize}

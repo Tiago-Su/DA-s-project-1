@@ -16,6 +16,10 @@ struct output {
     int match;
 };
 
+/**
+ * @class Tool
+ * @brief Wrapper which includes a parser, adapter and max_flow objects
+ */
 class Tool {
   public:
 
