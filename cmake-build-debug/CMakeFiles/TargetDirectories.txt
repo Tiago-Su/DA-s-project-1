@@ -1,0 +1,6 @@
+/home/state_machine/Documents/FEUP/2ºano/2ºSemestre/DA/DA-s-project-1/cmake-build-debug/CMakeFiles/testParser.dir
+/home/state_machine/Documents/FEUP/2ºano/2ºSemestre/DA/DA-s-project-1/cmake-build-debug/CMakeFiles/testAdapter.dir
+/home/state_machine/Documents/FEUP/2ºano/2ºSemestre/DA/DA-s-project-1/cmake-build-debug/CMakeFiles/testTool.dir
+/home/state_machine/Documents/FEUP/2ºano/2ºSemestre/DA/DA-s-project-1/cmake-build-debug/CMakeFiles/myProg.dir
+/home/state_machine/Documents/FEUP/2ºano/2ºSemestre/DA/DA-s-project-1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/state_machine/Documents/FEUP/2ºano/2ºSemestre/DA/DA-s-project-1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
