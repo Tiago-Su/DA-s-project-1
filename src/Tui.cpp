@@ -2,6 +2,7 @@
 #include "tool.h"
 #include <fstream>
 #include <iostream>
+#include <ostream>
 
 void Tui::menuHandler() {
     isRunning = true;
@@ -17,6 +18,10 @@ void clear() {
 void Tui::displayMenu() {
     clear();
     std::cout << "Please enter the option number. Use 5 as a command to retrocede back to Main Menu" << std::endl << std::endl;
+	std::cout << "Selected dataset: ";
+	if (dataSetPath.empty()) std::cout << "None\n";
+	else std::cout << dataSetPath << std::endl;
+
     std::cout << "1: Description" << std::endl;
     std::cout << "2: Select Dataset" << std::endl;
     std::cout << "3: Run" << std::endl;
