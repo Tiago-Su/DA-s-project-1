@@ -120,13 +120,17 @@ The BFS takes O(V + E) and then we search for unvisited submissions and for thei
 ### Pseudo-code
 ```python
 res = list()
-list = generate_all_comb_of_reviewers()
+list = generate_all_comb_of_reviewers(k)
 for (comb in list)
     new_graph = graph - {reviewers in comb}
     if (max_flow(new_graph) < max_flow(graph)) add_to_res() 
 
 return res
 ```
+
+### Time complexity
+We would need to generate all combinations with k nodes, so we would need O(combinations of r choose k), let r be the number of reviewers.
+And for each combination, we would need to recalculate the maximum flow thus taking in the end O(combiations of r choose k * V * E²)
 
 ## Credits
 **This program was made by**
