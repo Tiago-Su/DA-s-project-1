@@ -60,9 +60,17 @@ public:
     /**
   * @brief Dispatches post-run menu option to corresponding "handler" method.
   * @details Maps the provided option to its corresponding execution methods.
+  * @param int: the selected option
   **/
     void runOptionHandler(int option);
+
     int getRunOption();
+    /**
+* @brief Controls the post-run menu loop.
+* @details Repeatedly displays the run menu, retrieves the user's selected option,
+* and dispatches it to runOptionHandler. The loop continues until the
+* user selects the exit option (5), returning to the main menu.
+**/
     void runHandler();
     void displayCredits();
     void displayPrintMenu();
