@@ -24,11 +24,11 @@ Besides the main algorithm, there is a feature to find critical reviewers, that 
 ![ParserUML](./misc/parser.png)
 
 ### How does it work
-The Parser class is responsible for reading and extracting structured data from the input file. The input file is divided into clearly marked sections (#Submissions, #Reviewers, #Parameters, #Control), and the parser reads each section to populate the corresponding internal data structures.
+The Parser class is responsible for reading and extracting structured data from the input file. The input file is divided into clearly marked sections (#Submissions, #Reviewers, #Parameters, #Control), and the parser reads each section to populate the corresponding internal data structures to be later handled by algorithms.
 
 The parser works as follows:
 
-To handle the submissions info, each line is tokenized to extract the submission ID and domain (primary and secondary). Non-essential fields like title, authors, and email are ignored. The relevant information of valid submissions is stored in a submission structure, which is then stored in a vector of submissions.
+To handle the submissions info, each line is tokenized to extract the submission ID and domain (primary and secondary). Non essential fields like title, authors, and email are ignored. The relevant information of valid submissions is stored in a submission structure, which is then stored in a vector of submissions.
 
 
 
@@ -42,7 +42,7 @@ When it comes to parameters, workflow parameters are read, such as minimum revie
 
 Lastly, to handle control settings, control information is read, trimming any surrounding spaces or quotation marks and saving the relevant info in a control_ structure.
 
-The parser uses line-by-line reading and tokenization (std::strtok) to convert CSV-style input into structured objects. Helper functions handle string-to-integer conversion, trimming whitespace and quotes, and validating input values.
+The parser uses line-by-line reading and tokenization (std::strtok) to convert CSV input into structured objects. Helper functions handle string-to-integer conversion, trimming whitespace and quotes, and validating input values.
 
 The main entry point, parse_file(), locates each section in the file and calls the appropriate parsing function, ensuring that all data is loaded and ready for further processing.
 
@@ -60,8 +60,8 @@ The main entry point, parse_file(), locates each section in the file and calls t
 Due to some irregularities in the dataset file (e.g. An '#' between Submissions and Reviewers) and some doubts about the .csv structure (e.g. Can the topics have a different order), led us to make the decision to create the most generic parser to avoid problems in the future.
 
 ### Time Complexity
-Let l be the number of lines and h be the number of headers, we can define the upper bound to be O(l * h).
-So in our project, the time complexity to parse the dataset is O(4 * l) = O(l)
+Let l be the number of lines and h be the number of headers,the upper bound can be defined to be O(l * h).
+So in this project, the time complexity to parse the dataset is O(4 * l) = O(l)
 
 ----
 
