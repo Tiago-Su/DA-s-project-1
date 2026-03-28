@@ -118,15 +118,15 @@ The BFS takes O(V + E) and then we search for unvisited submissions and for thei
 
 ## Risk analysis (k > 1)
 ### Pseudo-code
-'''{r, tidy=FALSE, eval=FALSE, highlight=FALSE}
-res = list();
-list = generate_all_comb_of_reviewers();
-for (comb in list):
+```python
+res = list()
+list = generate_all_comb_of_reviewers()
+for (comb in list)
     new_graph = graph - {reviewers in comb}
-    if (max_flow(new_graph) < max_flow(graph)) add combination to list
+    if (max_flow(new_graph) < max_flow(graph)) add_to_res() 
 
-return res;
-'''
+return res
+```
 
 ## Credits
 **This program was made by**
