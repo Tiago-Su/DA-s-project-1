@@ -11,8 +11,12 @@ Besides the main algorithm, we need to find critical reviwers which if the perso
 2º Write the relative path to the dataset
 3º Press 3 to run
 
+----
+
 ## Project structure
 ![ProjectUML](./misc/DA1.png)
+
+----
 
 ## Parser
 ![ParserUML](./misc/parser.png)
@@ -27,8 +31,10 @@ Due to some irregularities in the dataset file (e.g. An '#' between Submissions 
 Let l be the number of lines and h be the number of headers, we can define the upper bound to be O(l * h).
 So in our project, the time complexity to parse the dataset is O(4 * l) = O(l)
 
+----
+
 ## Adapter
-![AdapterUML](.misc/adapter.png)
+![AdapterUML](./misc/adapter.png)
 
 ### How does it work
 The adapter class...    
@@ -37,6 +43,8 @@ The adapter class...
 Because it creates the graph, the time complexity is O(V + E)
 <br>V: number of vertices
 <br>E: number of edges
+
+-----
 
 ## MaxFlow
 ### How does it work
@@ -47,10 +55,13 @@ Because it creates the graph, the time complexity is O(V * E)
 <br>V: number of vertices
 <br>E: number of edges
 
+-----
+
 ## Tool
 ### How does it work
 The adapter class...    
 
+----
 
 ## Risk analysis
 ### How does it work
@@ -61,6 +72,8 @@ The BFS takes O(V + E) and then we search for unvisited submissions and for thei
 <br>But because the number of edges in this projects is smaller or equal to 2, i.e. constant, the BFS is the part which takes more time. 
 <br>Overall: O(V + E)
 
+
+-----
 
 ## Credits
 **This program was made by**
