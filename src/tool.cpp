@@ -175,6 +175,11 @@ void Tool::save_to_file(char* file){
 }
 
 void Tool::save_to_file(){
+	if (parser.control.gen == 0) {
+		std::cout << "Cannot save to file: Generate Assignement = 0\n";
+		return;
+	}
+
     std::string file_path = "program_output/" + parser.control.output;
     std::ofstream file_stream(file_path);
 	if (file_stream.fail()) {

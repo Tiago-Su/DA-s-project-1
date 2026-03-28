@@ -2,9 +2,13 @@
 #include "tool.h"
 #include <fstream>
 #include <iostream>
+#include <ostream>
+#include <filesystem>
 
 void Tui::menuHandler() {
     isRunning = true;
+	std::filesystem::create_directory("./program_output");
+
     while (isRunning) {
         displayMenu();
         int option = getOption();
@@ -14,9 +18,14 @@ void Tui::menuHandler() {
 void clear() {
     std::cout << "\033[2J\033[1;1H";
 }
+
 void Tui::displayMenu() {
     clear();
-    std::cout << "Please enter the option number. Use 5 as a command to retrocede back to Main Menu" << std::endl << std::endl;
+    std::cout << "Please enter the option number." << std::endl << std::endl;
+	std::cout << "Selected dataset: ";
+	if (dataSetPath.empty()) std::cout << "None\n\n";
+	else std::cout << dataSetPath << std::endl << std::endl;;
+
     std::cout << "1: Description" << std::endl;
     std::cout << "2: Select Dataset" << std::endl;
     std::cout << "3: Run" << std::endl;
@@ -62,6 +71,7 @@ void Tui::optionHandler(int option) {
             break;
     }
 }
+
 bool verifyFileExistence(const std::string path) {
     std::ifstream file(path);
     return file.good();
@@ -95,14 +105,16 @@ bool Tui::isDataSetSelected() {
     if (dataSetPath.empty()) {
         return false;
     }
+
     return true;
 }
 
 void Tui::displayRunMenu() {
     clear();
-    std::cout << "1.Print" << std::endl;
-    std::cout << "2.Save to File" << std::endl;
-    std::cout << "3.Risk Analysis" << std::endl;
+    std::cout << "1. Print" << std::endl;
+    std::cout << "2. Save to File" << std::endl;
+    std::cout << "3. Risk Analysis" << std::endl;
+	std::cout << "5. Go back to main menu\n";
 }
 
 void Tui::runHandler() {
@@ -177,27 +189,30 @@ void Tui::run() {
 
         runHandler();
     } else {
-        std::cout << "No selection of DataSet. Please go over to the 'Select DataSet' option (2) and enter a valid DataSet";
+        std::cout << "No selection of DataSet. Please go over to the 'Select DataSet' option (2) and enter a valid DataSet\n";
+		onHold();
     }
 }
 
 void Tui::displayCredits() {
     clear();
-    std::cout << std::endl << "Credits selected." << std::endl;
+    std::cout << std::endl << "Credits:" << std::endl;
+	std::cout << "This program was made by:\n";
+	std::cout << "- Francisca Baldaia da Silveira\n";
+	std::cout << "- Tiago Alexandre Rodrigues Botelho\n";
+	std::cout << "- Tiago Su\n";
+	onHold();
 }
 
 void Tui::displayDescription() {
     clear();
-    std::cout << "Description" << std::endl << std::endl;
-    while (true) {
-        int option;
-        std::cin >> option;
-        if (option == 5) {
-            break;
-        }
+    std::cout << "Description:" << std::endl << std::endl;
+	std::cout << "This project was made for the subject \"Desenho de Algoritmos\" and the objective of this program is the following:\n";
+	std::cout << "Given a set of articles with domains and a set of reviewers with expertise in certain domains, we need to find the best or one of the best distributions,\nknowing that reviewers can only review a maximum amount of articles and an article needs at a minimum amount of reviewers.\n";
 
-        std::cout << std::endl << "Invalid command. Use 5 to retrocede" << std::endl;
-    }
+	std::cout << "In case which is impossible to fill all articles with reviewers, we need to print which articles cannot be filled.\n\n";
+	std::cout << "Besides the main algorithm, we need to find critical reviwers which if the person fails to do his assignment, it will cause a failure.\n";
+	onHold();
 }
 
 void Tui::displayPrintMenu() {
