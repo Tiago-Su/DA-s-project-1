@@ -55,7 +55,7 @@ public:
     /**
 * @brief Displays the post-run menu options.
 * @details Clears the terminal and prints the available actions after the dataSet workflow has been executed.
-* **/
+**/
     void displayRunMenu();
     /**
   * @brief Dispatches post-run menu option to corresponding "handler" method.
@@ -63,6 +63,11 @@ public:
   * @param int: the selected option
   **/
     void runOptionHandler(int option);
+    /**
+* @brief Retrieves and validates a run menu option.
+* @details Prompts the user for input and repeats until a valid option is entered.
+* @return int: selected menu option for the run menu
+    **/
 
     int getRunOption();
     /**
@@ -72,10 +77,26 @@ public:
 * user selects the exit option (5), returning to the main menu.
 **/
     void runHandler();
+    /**
+    * @brief Displays the program credits.
+    * @details Clears the terminal and prints the names of the contributors.**/
     void displayCredits();
+    /**
+  * @brief Displays the options of print menu.
+  * @details Clears the terminal and prints the options.**/
     void displayPrintMenu();
+    /**
+  * @brief Dispatches print menu option to corresponding "handler" method.
+  * @details Maps the provided option to its corresponding execution methods.
+  * @param int: the selected option
+  **/
     void printOptionHandler(int option);
-    int getPrintOption();
+    /**
+* @brief Controls the print menu loop.
+* @details Repeatedly displays the print menu, retrieves the user's selected option,
+* and dispatches it to printOptionHandler. The loop continues until the
+* user selects the exit option (5), returning to the run menu.
+**/
     void printHandler();
 
    std::string dataSetPath;

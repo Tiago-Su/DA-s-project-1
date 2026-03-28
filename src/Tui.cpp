@@ -15,6 +15,9 @@ void Tui::menuHandler() {
         optionHandler(option);
     }
 }
+/**
+ * @brief Clears the terminal.
+ **/
 void clear() {
     std::cout << "\033[2J\033[1;1H";
 }
@@ -71,7 +74,11 @@ void Tui::optionHandler(int option) {
             break;
     }
 }
-
+/**
+ * @brief Verifies if a given file exists.
+ * @param string : path of file
+ * @return: bool: true if file exists, false otherwise.
+ **/
 bool verifyFileExistence(const std::string path) {
     std::ifstream file(path);
     return file.good();
@@ -125,7 +132,12 @@ void Tui::runHandler() {
         runOptionHandler(option);
     }
 }
-
+/**
+* @brief Pauses execution until the user enters the exit command.
+* @details
+* Repeatedly prompts the user to enter `5` and blocks execution until
+* the correct value is provided.
+**/
 void onHold() {
     while (true) {
         std::cout << std::endl;
