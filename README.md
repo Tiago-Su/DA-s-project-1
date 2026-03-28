@@ -7,11 +7,9 @@ If not all articles can be assigned reviewers, the program prints the unassigned
 Besides the main algorithm, there is a feature to find critical reviewers, that is: the reviewers that, if failing to do their assignment, will cause a failure.
 
 ## How to use
-1º Press 2 in the main menu to select the dataset
-
-2º Write the relative path to the dataset
-
-3º Press 3 to run
+1º Press 2 in the main menu to select the dataset<br>
+2º Write the relative path to the dataset<br>
+3º Press 3 to run<br>
 
 ----
 
@@ -80,10 +78,11 @@ Because it creates the graph, the time complexity is O(V + E)
 
 ## MaxFlow
 ### How does it work
-The adapter class...    
+In order to obtain the best distribution, we decide to use Edmonds-Karp algorithm.
+Although, the Ford-Fulkerson algorithm could give a more efficient result, due to the maximum flow, in the worst case, being 2 times the number of articles.
 
 ### Time Complexity
-Because it creates the graph, the time complexity is O(V * E)
+Because it creates the graph, the time complexity is O(V * E²)
 <br>V: number of vertices
 <br>E: number of edges
 
@@ -95,17 +94,39 @@ The adapter class...
 
 ----
 
-## Risk analysis
+## Risk analysis (k = 1)
+### What is risk analysis
+Risk analysis is the search for the set of reviewers in which are critical for the final result, i.e. if the reviewers in which if they fail to accomplish their work will result in one or more articles not having sufficient reviews.
+<br>For k = 1, we need to find which reviewers alone could cause in failure.
+
 ### How does it work
-...
+The key to find the critical reviewers is to analyse the residual graph. If we traverse the residual graph (using the augmented paths) from a node, we will have two types of nodes:
+- visited
+- unvisited
+
+
+And the key for the success is in the unvisited ones that tells us that all paths which are able to reach that node are saturated and there is no other path to reach it that starts from the starting node. That means if we remove one incoming edge from the node, the maximum flow would decrease. 
+<br>With that idea in thought, we just need to traverse the graph from source through the residual graph, then we filter from all unvisited nodes the articles and we know that all reviewers who are reviewing the article are critical.
 
 ### Time complexity
 The BFS takes O(V + E) and then we search for unvisited submissions and for their edges (O(V * E)). We can define our algorithm as O(V * E).
-<br>But because the number of edges in this project is smaller or equal to 2, i.e. constant, the BFS is the part which takes more time. 
+<br>But because the number of edges in this project is smaller or equal to 2, i.e. it is constant, the BFS is the part which takes more time. 
 <br>Overall: O(V + E)
 
 
 -----
+
+## Risk analysis (k > 1)
+### Pseudo-code
+'''{r, tidy=FALSE, eval=FALSE, highlight=FALSE}
+res = list();
+list = generate_all_comb_of_reviewers();
+for (comb in list):
+    new_graph = graph - {reviewers in comb}
+    if (max_flow(new_graph) < max_flow(graph)) add combination to list
+
+return res;
+'''
 
 ## Credits
 **This program was made by**
