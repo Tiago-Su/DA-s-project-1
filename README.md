@@ -67,7 +67,32 @@ So in this project, the time complexity to parse the dataset is O(4 * l) = O(l)
 ![AdapterUML](./misc/adapter.png)
 
 ### How does it work
-The adapter class...    
+The Adapter class is responsible for transforming the data processed by the parser into a graph structure. The data in the parser is divided into 4 different attributes: reviewers, submissions, parameters and control. The adapter's goal is to create a bipartite graph which separates the reviewers and the submissions, to be later handled by a max flow algorithm.
+
+The adater works as follows:
+
+First of all, it adds a source and a sink nodes to the graph, so it can be used by the max flow algorithm.
+
+
+
+Then, it adds a node to the graph for each reviewer, adding an edge between the source node and each of the reviewer nodes, with weight equal to the maxReviews parameter. It also creates an auxiliar map of each reviewer node id and the reviewers expertise, accounting on the parameters primaryRev and secondaryRev, that determine which of the domains are to have in account.
+
+
+
+After that, it adds a node to the graph for each submission, adding an edge between each of the reviewer nodes and the sink node, with weight equal to the minReviews parameter. It also adds an edge between each reviewer node, and each submission node that has a common domain to have in account, using the reviewers expertise auxiliar map, with weight 1 because each reviewer can only review each submission once.
+
+The parser has a map attribute, that maps every node to its type (source, sink, reviewer, submission), so that it is easier to read the graph's information after running the max flow algorithm, specially for showing the output.
+
+**So, in summary, this class is responsible for:**
+
+- Converting parsed data into a bipartite graph structure (reviewers and submissions)
+
+- Assigning and managing node types (source, sink, reviewer, submission)
+
+- Establishing the appropriate connections between nodes for the max flow algorithm
+
+- Preparing the graph for subsequent algorithms (Max Flow, Risk analysis, etc...)
+ 
 
 ### Time Complexity:
 Because it creates the graph, the time complexity is O(V + E)
