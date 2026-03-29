@@ -78,8 +78,11 @@ Because it creates the graph, the time complexity is O(V + E)
 
 ## MaxFlow
 ### How does it work
-In order to obtain the best distribution, we decide to use Edmonds-Karp algorithm.
-Although, the Ford-Fulkerson algorithm could give a more efficient result, due to the maximum flow, in the worst case, being 2 times the number of articles.
+The MaxFlow class implements the Edmonds-Karp algorithm, an implementation of the Ford-Fulkerson method that uses a BFS, and, consequently, is shortest oath "oriented", to compute the maximum flow in a directed graph. This maximum flow is used to generate the assignments in the system by modeling the assignment problem as a bipartite graph, where one set of vertices represents submissions and the other represents reviewers, and edges encode assignment possibilities with capacity constraints.
+
+In this context, computing the maximum flow is equivalent to solving a maximal bipartite matching problem: each unit of flow along an edge represents an assignment of a reviewer to a submission, and the maximum flow guarantees that as many submissions as possible receive the required number of reviewers while respecting all reviewer and submission constraints.
+** (In order to obtain the best distribution, we decide to use Edmonds-Karp algorithm.)**
+Although, the Ford-Fulkerson algorithm could give a more efficient result, due to the maximum flow, in the worst case, being 2 times the number of articles, Edmonds-Karp was the chosen implementation.
 
 ### Time Complexity
 Because it creates the graph, the time complexity is O(V * E²)
