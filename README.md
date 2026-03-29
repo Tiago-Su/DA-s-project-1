@@ -40,7 +40,7 @@ When it comes to parameters, workflow parameters are read, such as minimum revie
 
 Lastly, to handle control settings, control information is read, trimming any surrounding spaces or quotation marks and saving the relevant info in a control_ structure.
 
-The parser uses line-by-line reading and tokenization (std::strtok) to convert CSV input into structured objects. Helper functions handle string-to-integer conversion, trimming whitespace and quotes, and validating input values.
+The parser uses line by line reading and tokenization (std::strtok) to convert CSV input into structured objects. Helper functions handle string to integer conversion, trimming whitespace and quotes, and validating input values.
 
 The main entry point, parse_file(), locates each section in the file and calls the appropriate parsing function, ensuring that all data is loaded and ready for further processing.
 
@@ -103,8 +103,11 @@ Because it creates the graph, the time complexity is O(V + E)
 
 ## MaxFlow
 ### How does it work
-In order to obtain the best distribution, we decide to use Edmonds-Karp algorithm.
-Although, the Ford-Fulkerson algorithm could give a more efficient result, due to the maximum flow, in the worst case, being 2 times the number of articles.
+The MaxFlow class implements the Edmonds-Karp algorithm, an implementation of the Ford-Fulkerson method that uses a BFS, and, consequently, is shortest oath "oriented", to compute the maximum flow in a directed graph. This maximum flow is used to generate the assignments in the system by modeling the assignment problem as a bipartite graph, where one set of vertices represents submissions and the other represents reviewers, and edges encode assignment possibilities with capacity constraints.
+
+In this context, computing the maximum flow is equivalent to solving a maximal bipartite matching problem: each unit of flow along an edge represents an assignment of a reviewer to a submission, and the maximum flow guarantees that as many submissions as possible receive the required number of reviewers while respecting all reviewer and submission constraints.
+** (In order to obtain the best distribution, we decide to use Edmonds-Karp algorithm.)**
+Although, the Ford-Fulkerson algorithm could give a more efficient result, due to the maximum flow, in the worst case, being 2 times the number of articles, Edmonds-Karp was the chosen implementation.
 
 ### Time Complexity
 Because it creates the graph, the time complexity is O(V * E²)
@@ -115,8 +118,20 @@ Because it creates the graph, the time complexity is O(V * E²)
 
 ## Tool
 ### How does it work
-The adapter class...    
+The Tool class is responsible for executing the core workflow of the system, meaning: transforming parsed input data into a graph representation, running the assignment algorithm, and the corresponding outputs. It is responsible for data preparation, algorithm execution, and result generation.
 
+The setup() function, which loads the input file, parses its contents using the Parser, and converts the data into a graph structure through an adapter. This graph represents the relationship between submissions and reviewers and provides the structure on which the assignment algorithm operates.
+
+The main processing step is performed by get_max_flow(), which applies the Edmonds-Karp algorithm to compute a maximum flow on the graph. This corresponds to finding an optimal assignment between reviewers and submissions. The resulting flow is then interpreted and stored as matching outputs for both submissions and reviewers.
+
+The get_missing_output() function identifies submissions that did not receive the required number of reviewers by inspecting edges whose flow does not meet their capacity. These are stored and sorted for reporting. The risk_analysis() function identifies critical reviewers whose removal would compromise the assignment. It performs a breadth-first search on the residual graph to determine which vertices are not reachable and derives the set of critical reviewers from this structure. This is best described below, in the corresponding section. The class supports printing results to the console or saving them to a file. Outputs include the assignment results, missing assignments, and risk analysis.
+So, in summary, the outlined responsabilities this class is responsible for are:
+
+- Integrating parsing, graph construction, and algorithm execution
+- Computing assignments using maximum flow algorithm (Edmonds-Karp)
+- Detecting incomplete assignments and reports missing allocations
+- Perfoming a risk analysis for k=1
+- Supporting console output and file-based result storage
 ----
 
 ## Risk analysis (k = 1)
