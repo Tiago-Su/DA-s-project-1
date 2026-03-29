@@ -7,6 +7,9 @@
 #include <string>
 #include "tool.h"
 
+/**
+ *@brief Class responsible for TUI (TextUserInterface).
+**/
 class Tui {
 public:
     Tool tool;
