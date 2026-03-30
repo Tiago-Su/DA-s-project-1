@@ -1,0 +1,197 @@
+#include "parser.h"
+#include <cstring>
+#include <fstream>
+#include <stdio.h>
+
+int Parser::read_value(char* word) {
+    int value = -1;
+    if (word) value = std::atoi(word);
+    return value;
+}
+
+void Parser::parse_line(char* line, submission& s) {
+    // Read Id
+    s.id = read_value(std::strtok(line, ","));
+
+    // Skipping title, authors and email
+    std::strtok(NULL, ",");
+    std::strtok(NULL, ",");
+    std::strtok(NULL, ",");
+
+    // Read primary
+    s.primary = read_value(std::strtok(NULL, ","));
+
+    // Read secondary
+    s.secondary = read_value(std::strtok(NULL, ","));
+}
+
+void Parser::parse(std::ifstream& file, std::vector<submission>& submissions) {
+    std::string line;
+
+    std::getline(file, line);
+    std::getline(file, line);
+
+    while (file && line[0] != '#') {
+        char buffer[100];
+        std::strcpy(buffer, line.c_str());
+
+        submission s;
+        parse_line(buffer, s);
+        if (s.id != -1) submissions.push_back(s);
+
+        std::getline(file, line);
+    }
+}
+
+void Parser::parse_line(char* line, reviewer& r) {
+    // Read Id
+    r.id = read_value(std::strtok(line, ","));
+
+    // Skipping name and email
+    std::strtok(NULL, ",");
+    std::strtok(NULL, ",");
+
+    // Read primary
+    r.primary = read_value(std::strtok(NULL, ","));
+
+    // Read secondary
+    r.secondary = read_value(std::strtok(NULL, ","));
+}
+
+void Parser::parse(std::ifstream& file, std::vector<reviewer>& reviewers) {
+    std::string line;
+    std::getline(file, line);
+    std::getline(file, line);
+
+    while (file && line[0] != '#') {
+        char buffer[100];
+        std::strcpy(buffer, line.c_str());
+
+        reviewer r;
+        parse_line(buffer, r);
+        if (r.id != -1) reviewers.push_back(r);
+
+        std::getline(file, line);
+    }
+}
+
+void Parser::parse_line(char* line, parameters_& p, int i) {
+    std::strtok(line, ",");
+    int value = read_value(std::strtok(NULL, ","));
+
+    switch (i) {
+        case 0:
+            p.minReviews = value;
+            break;
+        case 1:
+            p.maxReviews = value;
+            break;
+        case 2:
+            p.primaryRev = value;
+            break;
+        case 3:
+            p.secondaryRev = value;
+            break;
+        case 4:
+            p.primarySub = value;
+            break;
+        case 5:
+            p.secondarySub = value;
+            break;
+    }
+}
+
+void Parser::parse(std::ifstream& file, parameters_& parameters) {
+    std::string line;
+    std::getline(file, line);
+    int i = 0;
+
+    while (file && line[0] != '#') {
+        char buffer[100];
+        std::strcpy(buffer, line.c_str());
+        parse_line(buffer, parameters, i);
+
+        std::getline(file, line);
+        i++;
+    }
+}
+
+/**
+ * @brief Trims trailing and following spaces or quotation marks of a string
+ * @param word String to trim
+ */
+char* trim(char* word) {
+    while (std::isspace(*word) || *word == '"') word++;
+	char* end = word;
+
+	end += std::strlen(word) - 1; 
+	while (std::isspace(*end) || *end == '"') end--;
+	*(end + 1) = '\0';
+
+	return word;
+}
+
+void Parser::parse_line(char* line, control_& p, int i) {
+    std::strtok(line, ",");
+    char* word = std::strtok(NULL, ",");
+    int value = read_value(word);
+
+    switch (i) {
+        case 0:
+            p.gen = value;
+            break;
+        case 1:
+            p.risk = value;
+            break;
+        case 2:
+            p.output = trim(word);
+            break;
+    }
+}
+
+void Parser::parse(std::ifstream& file, control_& control) {
+    std::string line;
+    std::getline(file, line);
+    int i = 0;
+
+    while (file && line[0] != '#') {
+        char buffer[100];
+        std::strcpy(buffer, line.c_str());
+        parse_line(buffer, control, i);
+
+        std::getline(file, line);
+        i++;
+    }
+}
+
+std::ifstream Parser::find_header(const char* file, const std::string& header) {
+    std::ifstream in(file);
+    std::string line;
+    std::getline(in, line);
+
+    while (in && line != header) {
+        std::getline(in, line);
+    }
+
+    return in;
+}
+
+void Parser::parse_file() {
+    std::ifstream in;
+
+    in = find_header(file, "#Submissions");
+    parse(in, submissions);
+
+    in = find_header(file, "#Reviewers");
+    parse(in, reviewers);
+
+    in = find_header(file, "#Parameters");
+    parse(in, parameters);
+
+    in = find_header(file, "#Control");
+    parse(in, control);
+}
+
+void Parser::load_file(const char* file_name) {
+    file = file_name;
+}
